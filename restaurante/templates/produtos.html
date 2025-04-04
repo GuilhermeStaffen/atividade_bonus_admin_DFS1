@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+    <!-- Link do Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .product-list {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-item {
+            border-bottom: 1px solid #e9ecef;
+            padding: 10px 0;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-name {
+            font-weight: bold;
+        }
+
+        .product-price {
+            color: #28a745;
+        }
+
+        .product-description {
+            font-style: italic;
+        }
+
+        .product-category {
+            color: #6c757d;
+        }
+
+        .btn-cadastrar {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Produtos</h1>
+
+    <div class="container text-center">
+        <a href="{% url 'cadastrar_produto' %}" class="btn btn-primary btn-cadastrar">Cadastrar Produto</a>
+
+        <!-- Filtro de Categoria -->
+        <form method="GET" action="" class="form-inline justify-content-center mt-4">
+            <select name="categoria" id="categoria" class="form-control">
+                <option value="">Todas as Categorias</option>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}" {% if categoria.id == request.GET.categoria %} selected {% endif %}>
+                        {{ categoria.nome_categoria }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-secondary ml-2">Filtrar</button>
+        </form>
+    </div>
+
+
+    <div class="product-list mt-5">
+        <ul class="list-unstyled">
+            {% for produto in produtos %}
+            <li class="product-item">
+                <span class="product-name">{{ produto.nome }}</span><br>
+                <span class="product-price">Preço: R$ {{ produto.preco }}</span><br>
+                <span class="product-description">{{ produto.descricao }}</span><br>
+                <span class="product-category">Categoria: {{ produto.categoria.nome_categoria }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Link do Bootstrap JS e dependências (opcional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
